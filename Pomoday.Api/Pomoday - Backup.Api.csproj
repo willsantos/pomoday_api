@@ -22,8 +22,4 @@
     <ProjectReference Include="..\Pomoday.IoC\Pomoday.IoC.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
