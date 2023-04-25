@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Pomoday.Api\Pomoday.Api.csproj" />
+    <ProjectReference Include="..\Pomoday.Domain\Pomoday.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
