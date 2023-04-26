@@ -10,44 +10,54 @@ namespace Pomoday.Repository.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        public Task AddAsync(T item)
+        private readonly PomodayContext _context;
+
+        public BaseRepository(PomodayContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task EditAsync(T item)
+        public async Task AddAsync(T item)
         {
-            throw new NotImplementedException();
+            await _context.Set<T>().AddAsync(item);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<T> FindAsNoTrackingAsync(Expression<Func<T, bool>> expression)
+        public async Task EditAsync(T item)
         {
-            throw new NotImplementedException();
+            _context.Set<T>().Update(item);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<T> FindAsync(Guid id)
+        public async Task<T> FindAsNoTrackingAsync(Expression<Func<T, bool>> expression)
         {
-            throw new NotImplementedException();
+            return await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(expression);
         }
 
-        public Task<T> FindAsync(Expression<Func<T, bool>> expression)
+        public async Task<T> FindAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Set<T>().FindAsync(id);
         }
 
-        public Task<IEnumerable<T>> ListAsync()
+        public async Task<T> FindAsync(Expression<Func<T, bool>> expression)
         {
-            throw new NotImplementedException();
+            return await _context.Set<T>().FirstOrDefaultAsync(expression);
         }
 
-        public Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> expression)
+        public async Task<IEnumerable<T>> ListAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Set<T>().ToListAsync();
         }
 
-        public Task RemoveAsync(T item)
+        public async Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> expression)
         {
-            throw new NotImplementedException();
+            return await _context.Set<T>().Where(expression).ToListAsync();
+        }
+
+        public async Task RemoveAsync(T item)
+        {
+            _context.Set<T>().Remove(item);
+            await _context.SaveChangesAsync();
         }
     }
 }

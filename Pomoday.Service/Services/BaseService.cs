@@ -2,14 +2,7 @@
 using Pomoday.Domain.Entities;
 using Pomoday.Domain.Interfaces.Repository;
 using Pomoday.Domain.Interfaces.Service;
-using Pomoday.Domain.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pomoday.Service.Services
 {
@@ -22,8 +15,8 @@ namespace Pomoday.Service.Services
         public BaseService(IBaseRepository<T> repository, IHttpContextAccessor httpContextAccessor)
         {
             _repository = repository;
-            UsuarioId = httpContextAccessor.HttpContext.GetClaim(ClaimTypes.NameIdentifier).ToInt();
-            UsuarioPermissao = httpContextAccessor.HttpContext.GetClaim(ClaimTypes.Role);
+            //UsuarioId = httpContextAccessor.HttpContext.GetClaim(ClaimTypes.NameIdentifier).ToGuid();
+            //UsuarioPermissao = httpContextAccessor.HttpContext.GetClaim(ClaimTypes.Role);
         }
 
         public async Task<T> AdicionarAsync(T entity)
