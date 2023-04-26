@@ -11,10 +11,10 @@ namespace Pomoday.Domain.Interfaces.Service
 {
     public interface IBaseService<Request, Response>
     {
-        Task CriarAsync(Request request);
-        Task AtualizarAsync(Guid id, Request request);
+        Task<Response> CriarAsync(Request request);
+        Task<Response> AtualizarAsync(Guid? id, Request request);
         Task DeletarAsync(Guid id);
-        Task ObterPorIdAsync(Guid id);
+        Task<Response> ObterPorIdAsync(Guid id);
         Task<IEnumerable<Response>> ObterTodosAsync();
     }
 }
