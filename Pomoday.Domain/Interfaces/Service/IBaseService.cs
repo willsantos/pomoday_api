@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Pomoday.Domain.Contracts.Requests;
+using Pomoday.Domain.Contracts.Responses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -7,14 +9,12 @@ using System.Threading.Tasks;
 
 namespace Pomoday.Domain.Interfaces.Service
 {
-    public interface IBaseService<T>
+    public interface IBaseService<Request, Response>
     {
-        Task<IEnumerable<T>> ObterTodosAsync(Expression<Func<T, bool>> expression);
-        Task<T> ObterAsync(Expression<Func<T, bool>> expression);
-        Task<IEnumerable<T>> ObterTodosAsync();
-        Task<T> ObterPorIdAsync(Guid id);
-        Task<T> AdicionarAsync(T entity);
+        Task CriarAsync(Request request);
+        Task AtualizarAsync(Guid id, Request request);
         Task DeletarAsync(Guid id);
-        Task AlterarAsync(T entity);
+        Task ObterPorIdAsync(Guid id);
+        Task<IEnumerable<Response>> ObterTodosAsync();
     }
 }
