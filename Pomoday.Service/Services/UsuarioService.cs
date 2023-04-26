@@ -41,17 +41,34 @@ namespace Pomoday.Service.Services
 
         public async Task DeletarAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var usuarioBanco = await _usuarioRepository.FindAsync(id);
+            if (usuarioBanco == null)
+            {
+                throw new Exception("Usuário não encontrado");
+            }
+            if (usuarioBanco.Ativo == false)
+            {
+                throw new Exception("Usuário já foi deletado");
+            }
+            usuarioBanco.Ativo = true;
+            usuarioBanco.AlteradoEm = DateTime.Now;
+            await _usuarioRepository.EditAsync(usuarioBanco);
         }
 
         public async Task<UsuarioResponse> ObterPorIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var usuarioBanco = await _usuarioRepository.FindAsync(x => x.Ativo && x.Id == id);
+            if (usuarioBanco == null)
+            {
+                throw new Exception("Usuário não encontrado");
+            }
+            return _mapper.Map<UsuarioResponse>(usuarioBanco);
         }
 
         public async Task<IEnumerable<UsuarioResponse>> ObterTodosAsync()
         {
-            throw new NotImplementedException();
+            var listaUsuarios = await _usuarioRepository.ListAsync(x => x.Ativo);
+            return _mapper.Map<IEnumerable<UsuarioResponse>>(listaUsuarios);
         }
 
         public async Task<UsuarioResponse> PutUsuario(UsuarioAlteracaoRequest request, Guid? id)
