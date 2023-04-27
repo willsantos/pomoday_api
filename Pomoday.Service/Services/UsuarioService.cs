@@ -26,17 +26,7 @@ namespace Pomoday.Service.Services
 
         public async Task<UsuarioResponse> AtualizarAsync(Guid? id, UsuarioRequest request)
         {
-            var usuarioBanco = await _usuarioRepository.FindAsync(x => x.Ativo);
-            if (usuarioBanco == null)
-            {
-                throw new ArgumentException("Usuário não encontrado ou inativo");
-            }
-            usuarioBanco.Ativo = true;
-            usuarioBanco.Nome = request.Nome;
-            usuarioBanco.Email = request.Email;
-            usuarioBanco.AlteradoEm = DateTime.Now;
-            await _usuarioRepository.EditAsync(usuarioBanco);
-            return _mapper.Map<UsuarioResponse>(usuarioBanco);
+            throw new NotImplementedException();
         }
 
         public async Task DeletarAsync(Guid id)
@@ -73,7 +63,17 @@ namespace Pomoday.Service.Services
 
         public async Task<UsuarioResponse> PutUsuario(UsuarioAlteracaoRequest request, Guid? id)
         {
-            throw new NotImplementedException();
+            var usuarioBanco = await _usuarioRepository.FindAsync(x => x.Ativo);
+            if (usuarioBanco == null)
+            {
+                throw new ArgumentException("Usuário não encontrado ou inativo");
+            }
+            usuarioBanco.Ativo = true;
+            usuarioBanco.Nome = request.Nome;
+            usuarioBanco.Email = request.Email;
+            usuarioBanco.AlteradoEm = DateTime.Now;
+            await _usuarioRepository.EditAsync(usuarioBanco);
+            return _mapper.Map<UsuarioResponse>(usuarioBanco);
         }
     }
 }
