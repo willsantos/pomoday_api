@@ -36,7 +36,6 @@ namespace Pomoday.Api.Controllers
         /// </summary>
         /// <returns>Usuário</returns>
         /// <response code="200">Retorna usuário</response>
-        /// <response code="403">Se o acesso for negado</response>
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Busca um usuário por Id", Description = "Retorna o usuário se ele for encontrado. Caso contrário, retorna exception.")]
         [ProducesResponseType(200)]
@@ -44,6 +43,46 @@ namespace Pomoday.Api.Controllers
         {
             var result = await _usuarioService.ObterPorIdAsync(id);
             return Ok(result);
+        }
+        /// <summary>
+        /// Realiza busca de todos os usuários.
+        /// </summary>
+        /// <returns>Usuário</returns>
+        /// <response code="200">Retorna usuários</response>
+        [HttpGet]
+        [SwaggerOperation(Summary = "Busca todos os usuários ativos.", Description = "Retorna todos os usuários Ativos.")]
+        [ProducesResponseType(200)]
+        public async Task<ActionResult<IEnumerable<UsuarioResponse>>> Get()
+        {
+            var result = await _usuarioService.ObterTodosAsync();
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Busca um usuário e realiza mudança de dados.
+        /// </summary>   
+        ///<returns>Usuário modificado</returns>
+        /// <response code="200">Se o objeto existe e foi alterado</response>
+        [HttpPut("{id}")]
+        [ProducesResponseType(200)]
+        [SwaggerOperation(Summary = "Busca usuário para mudança de dados.", Description = "Retorna o usuário modificado.")]
+        public async Task<ActionResult<UsuarioResponse>> Put([FromBody] UsuarioAlteracaoRequest request, [FromRoute] Guid id)
+        {
+            var result = await _usuarioService.PutUsuario(request, id);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Deleta usuário.
+        /// </summary>            
+        /// <response code="200">Se o objeto existe</response>
+        /// <response code="404">Se o objeto não existe</response>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        public async Task<ActionResult> Delete([FromRoute] Guid id)
+        {
+            await _usuarioService.DeletarAsync(id);
+            return NoContent();
         }
     }
 }
