@@ -29,7 +29,7 @@ namespace Pomoday.Api.Controllers
         public async Task<ActionResult<UsuarioResponse>> Post([FromBody] UsuarioRequest usuario)
         {
             var result = await _usuarioService.CriarAsync(usuario);
-            return Ok(result);
+            return Created(nameof(Post), result);
         }
         /// <summary>
         /// Realiza uma busca de usuário por Id.
