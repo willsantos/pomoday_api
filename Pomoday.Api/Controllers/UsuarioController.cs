@@ -57,7 +57,7 @@ namespace Pomoday.Api.Controllers
             }
             catch(ArgumentException exception)
             {
-                return BadRequest(exception.Message);
+                return NotFound(exception.Message);
             }
             catch (Exception ex) 
             { 
@@ -82,7 +82,7 @@ namespace Pomoday.Api.Controllers
             }
             catch(ArgumentException exception)
             {
-                return BadRequest(exception.Message);
+                return NotFound(exception.Message);
             }
             catch (Exception ex) 
             { 
@@ -108,7 +108,7 @@ namespace Pomoday.Api.Controllers
             }
             catch(ArgumentException exception)
             {
-                return BadRequest(exception.Message);
+                return NotFound(exception.Message);
             }
             catch (Exception ex)
             {
@@ -132,7 +132,7 @@ namespace Pomoday.Api.Controllers
             }
             catch(ArgumentException exception)
             {
-                return BadRequest(exception.Message);
+                return NotFound(exception.Message);
             }
             catch (Exception ex)
             {
