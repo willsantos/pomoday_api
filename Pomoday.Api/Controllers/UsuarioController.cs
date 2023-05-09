@@ -33,10 +33,11 @@ namespace Pomoday.Api.Controllers
                 var result = await _usuarioService.CriarAsync(usuario);
                 return Created(nameof(Post), result);
             }
-            catch (Exception exception)
+            catch (ArgumentException exception)
             {
                 return BadRequest(exception.Message);
             }
+            catch (Exception ex) { return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); }
         }
         /// <summary>
         /// Realiza uma busca de usuário por Id.
@@ -54,9 +55,13 @@ namespace Pomoday.Api.Controllers
                 var result = await _usuarioService.ObterPorIdAsync(id);
                 return Ok(result);
             }
-            catch(Exception exception)
+            catch(ArgumentException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (Exception ex) 
+            { 
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); 
             }
         }
         /// <summary>
@@ -75,9 +80,13 @@ namespace Pomoday.Api.Controllers
                 var result = await _usuarioService.ObterTodosAsync();
                 return Ok(result);
             }
-            catch(Exception exception)
+            catch(ArgumentException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (Exception ex) 
+            { 
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); 
             }
         }
 
@@ -97,9 +106,13 @@ namespace Pomoday.Api.Controllers
                 var result = await _usuarioService.PutUsuario(request, id);
                 return Ok(result);
             }
-            catch(Exception exception)
+            catch(ArgumentException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
@@ -117,9 +130,13 @@ namespace Pomoday.Api.Controllers
                 await _usuarioService.DeletarAsync(id);
                 return NoContent();
             }
-            catch(Exception exception)
+            catch(ArgumentException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
     }
