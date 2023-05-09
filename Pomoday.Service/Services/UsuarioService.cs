@@ -34,11 +34,11 @@ namespace Pomoday.Service.Services
             var usuarioBanco = await _usuarioRepository.FindAsync(id);
             if (usuarioBanco == null)
             {
-                throw new Exception("Usuário não encontrado");
+                throw new ArgumentException("Usuário não encontrado");
             }
             if (usuarioBanco.Ativo == false)
             {
-                throw new Exception("Usuário já foi deletado");
+                throw new ArgumentException("Usuário já foi deletado");
             }
             usuarioBanco.Ativo = true;
             usuarioBanco.AlteradoEm = DateTime.Now;
@@ -50,7 +50,7 @@ namespace Pomoday.Service.Services
             var usuarioBanco = await _usuarioRepository.FindAsync(x => x.Ativo && x.Id == id);
             if (usuarioBanco == null)
             {
-                throw new Exception("Usuário não encontrado");
+                throw new ArgumentException("Usuário não encontrado");
             }
             return _mapper.Map<UsuarioResponse>(usuarioBanco);
         }
