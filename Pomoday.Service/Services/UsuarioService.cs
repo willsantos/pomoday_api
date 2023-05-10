@@ -19,7 +19,7 @@ namespace Pomoday.Service.Services
         public async Task<UsuarioResponse> CriarAsync(UsuarioRequest request)
         {
             var requestUsuarioEntity = _mapper.Map<Usuario>(request);
-            requestUsuarioEntity.Senha = Criptografia.Encrypt(request.Senha);
+            //requestUsuarioEntity.Senha = Criptografia.Encrypt(request.Senha);
             await _usuarioRepository.AddAsync(requestUsuarioEntity);
             return _mapper.Map<UsuarioResponse>(requestUsuarioEntity);
         }

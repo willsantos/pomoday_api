@@ -1,10 +1,6 @@
 ﻿using Pomoday.Domain.Entities;
 using Pomoday.Domain.Interfaces.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Pomoday.Repository.Context;
 
 namespace Pomoday.Repository.Repositories
 {
