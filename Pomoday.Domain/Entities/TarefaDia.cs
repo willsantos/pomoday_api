@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Pomoday.Domain.Entities
 {
-    public class Tarefa_Dia
+    public class TarefaDia
     {
         public Guid Id { get; set; }
         public virtual Dia Dia{ get; set; }
-        public virtual Projeto Projeto { get; set; }
+        public virtual Tarefa Tarefa { get; set; }
 
         #region Foreign key
         public Guid DiaId { get; set; }
-        public Guid ProjetoId { get; set; }
+        public Guid TarefaId { get; set; }
         #endregion
     }
 }

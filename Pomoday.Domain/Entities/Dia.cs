@@ -10,7 +10,7 @@ namespace Pomoday.Domain.Entities
     public class Dia : BaseEntity
     {
         public StatusDias Status { get; set; }
-        public virtual Usuario Usuario { get; set; }
+        public virtual Usuario? Usuario { get; set; }
 
         #region Foreign key
         public Guid UsuarioId { get; set; }

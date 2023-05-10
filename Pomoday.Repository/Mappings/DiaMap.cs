@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Pomoday.Domain.Entities;
 
 namespace Pomoday.Repository.Mappings
 {
-    internal class DiaMap
+    public class DiaMap
     {
+        public void Configure(EntityTypeBuilder<Dia> builder)
+        {
+            builder.HasOne(prop => prop.Usuario)
+                .WithMany(prop => prop.Dias)
+                .HasForeignKey(prop => prop.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
     }
 }
