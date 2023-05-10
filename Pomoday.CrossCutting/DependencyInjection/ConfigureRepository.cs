@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pomoday.Domain.Interfaces.Repository;
+using Pomoday.Repository.Repositories;
 
 namespace Pomoday.CrossCutting.DependencyInjection
 {
@@ -13,6 +15,12 @@ namespace Pomoday.CrossCutting.DependencyInjection
     {
         public static void ConfigureDependenciesRepository(IServiceCollection serviceCollection, string connectionString)
         {
+            serviceCollection.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            serviceCollection.AddScoped<IProjetoRepository, ProjetoRepository>();
+            serviceCollection.AddScoped<ITarefaRepository, TarefaRepository>();
+            serviceCollection.AddScoped<ITarefaDiaRepository, TarefaDiaRepository>();
+            serviceCollection.AddScoped<IDiaRepository, DiaRepository>();
+
             serviceCollection.AddDbContext<PomodayContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
         }
     }
