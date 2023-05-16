@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pomoday.Domain.Interfaces.Repository
 {
-    public interface ITarefaDiaRepository : IBaseRepository<TarefaDia>
+    public interface IRegistroRepository : IBaseRepository<Registro>
     {
     }
 }

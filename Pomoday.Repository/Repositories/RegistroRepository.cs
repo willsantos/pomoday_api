@@ -4,9 +4,9 @@ using Pomoday.Repository.Context;
 
 namespace Pomoday.Repository.Repositories
 {
-    public class ProjetoRepository : BaseRepository<Projeto>, IProjetoRepository
+    public class RegistroRepository : BaseRepository<Registro>, IRegistroRepository
     {
-        public ProjetoRepository(PomodayContext context) : base(context)
+        public RegistroRepository(PomodayContext context) : base(context)
         {
         }
     }

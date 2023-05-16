@@ -12,7 +12,6 @@ namespace Pomoday.Domain.Entities
         public string Email { get; set; }
         public string Senha { get; set; }
         public ICollection<Projeto> Projetos { get; set; }
-        public ICollection<Dia> Dias{ get; set; }
         public ICollection<Tarefa> Tarefas{ get; set; }
     }
 }

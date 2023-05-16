@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Pomoday.Domain.Utils
 {
-    public enum StatusDias
+    public enum EnumStatus
     {
-        Iniciado,
-        Finalizado
+        AFazer,
+        Fazendo,
+        Feita
     }
 }
