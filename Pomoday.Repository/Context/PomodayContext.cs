@@ -9,8 +9,7 @@ namespace Pomoday.Repository.Context
         public DbSet<Tarefa> Tarefas { get; set; }
         public DbSet<Projeto> Projetos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Dia> Dias { get; set; }
-        public DbSet<TarefaDia> TarefaDias { get; set; }
+        public DbSet<Registro> Registros { get; set; }
 
         public PomodayContext(DbContextOptions<PomodayContext> options) : base(options) { }
 
@@ -19,8 +18,7 @@ namespace Pomoday.Repository.Context
             modelBuilder.Entity<Tarefa>(new TarefaMap().Configure);
             modelBuilder.Entity<Projeto>(new ProjetoMap().Configure);
             modelBuilder.Entity<Usuario>(new UsuarioMap().Configure);
-            modelBuilder.Entity<TarefaDia>(new TarefaDiaMap().Configure);
-            modelBuilder.Entity<Dia>(new DiaMap().Configure);
+            modelBuilder.Entity<Registro>(new RegistroMap().Configure);
         }
     }
 }

@@ -18,8 +18,7 @@ namespace Pomoday.CrossCutting.DependencyInjection
             serviceCollection.AddScoped<IUsuarioRepository, UsuarioRepository>();
             serviceCollection.AddScoped<IProjetoRepository, ProjetoRepository>();
             serviceCollection.AddScoped<ITarefaRepository, TarefaRepository>();
-            serviceCollection.AddScoped<ITarefaDiaRepository, TarefaDiaRepository>();
-            serviceCollection.AddScoped<IDiaRepository, DiaRepository>();
+            serviceCollection.AddScoped<IRegistroRepository, RegistroRepository>();
 
             serviceCollection.AddDbContext<PomodayContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
         }
