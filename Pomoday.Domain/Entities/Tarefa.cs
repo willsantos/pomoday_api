@@ -11,6 +11,7 @@ namespace Pomoday.Domain.Entities
         public EnumPrioridadeTarefa Prioridade { get; set; }
         public virtual Usuario Usuario { get; set; }
         public virtual Projeto? Projeto { get; set; }
+        public ICollection<Registro> Registros { get; set; }
 
         #region Foreign key
         public Guid UsuarioId { get; set; }
