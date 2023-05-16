@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Pomoday.Domain.Utils
 {
-    public enum StatusTarefas
+    public enum EnumPrioridadeTarefa
     {
-        AFazer,
-        Fazendo,
-        Feita
+        Normal,
+        Importante,
+        Urgente
     }
 }

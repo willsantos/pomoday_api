@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pomoday.Domain.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace Pomoday.Domain.Entities
     public class Projeto : BaseEntity
     {
         public string Nome { get; set; }
+        public EnumStatus Status { get; set; }
         public DateTime? Prazo{ get; set; }
         public float Progresso{ get; set; }
         public virtual Usuario Usuario { get; set; }
