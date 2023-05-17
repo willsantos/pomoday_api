@@ -4,8 +4,15 @@ namespace Pomoday.Domain.Entities
 {
     public class Tarefa : BaseEntity
     {
-        public DateTime Prazo { get; set; }
-        public DateTime Agendada { get; set; }
+        public Tarefa()
+        {
+            Status = EnumStatus.AFazer;
+            Prioridade = EnumPrioridadeTarefa.Normal;
+        }
+
+        public string Nome { get; set; }
+        public DateTime? Prazo { get; set; }
+        public DateTime? Agendada { get; set; }
         public TimeSpan? TempoGasto { get; set; }
         public EnumStatus Status { get; set; }
         public EnumPrioridadeTarefa Prioridade { get; set; }

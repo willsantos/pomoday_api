@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pomoday.Repository.Context;
 
@@ -10,9 +11,10 @@ using Pomoday.Repository.Context;
 namespace Pomoday.Repository.Migrations
 {
     [DbContext(typeof(PomodayContext))]
-    partial class PomodayContextModelSnapshot : ModelSnapshot
+    [Migration("20230517183307_CampoNomeTarefa")]
+    partial class CampoNomeTarefa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
