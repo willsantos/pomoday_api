@@ -23,10 +23,13 @@ namespace Pomoday.Service.Services
             var tarefaBanco = await _tarefaRepository.FindAsync(x => x.Ativo);
             if (tarefaBanco == null)
             {
-                throw new ArgumentException("Usuário não encontrado ou inativo");
+                throw new ArgumentException("Tarefa não encontrada ou inativa");
             }
             tarefaBanco.Ativo = true;
             tarefaBanco.Nome = request.Nome;
+            tarefaBanco.Prazo = request.Prazo;
+            tarefaBanco.Agendada = request.Agendada;
+            tarefaBanco.TempoGasto = request.TempoGasto;
             tarefaBanco.AlteradoEm = DateTime.Now;
             await _tarefaRepository.EditAsync(tarefaBanco);
             return _mapper.Map<TarefaResponse>(tarefaBanco);
