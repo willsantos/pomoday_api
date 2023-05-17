@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Pomoday.Domain.Contracts.Requests;
 using Pomoday.Domain.Contracts.Responses;
+using Pomoday.Domain.Entities;
 using Pomoday.Domain.Interfaces.Repository;
 using Pomoday.Domain.Interfaces.Service;
 
@@ -11,29 +12,57 @@ namespace Pomoday.Service.Services
         private readonly ITarefaRepository _tarefaRepository;
         private readonly IMapper _mapper;
 
-        public Task<TarefaResponse> CriarAsync(TarefaRequest request)
+        public async Task<TarefaResponse> CriarAsync(TarefaRequest request)
         {
-            throw new NotImplementedException();
+            var requestTarefaEntity = _mapper.Map<Tarefa>(request);
+            await _tarefaRepository.AddAsync(requestTarefaEntity);
+            return _mapper.Map<TarefaResponse>(requestTarefaEntity);
         }
-        public Task<TarefaResponse> AtualizarAsync(Guid? id, TarefaRequest request)
+        public async Task<TarefaResponse> AtualizarAsync(Guid? id, TarefaRequest request)
         {
-            throw new NotImplementedException();
+            var tarefaBanco = await _tarefaRepository.FindAsync(x => x.Ativo);
+            if (tarefaBanco == null)
+            {
+                throw new ArgumentException("Usuário não encontrado ou inativo");
+            }
+            tarefaBanco.Ativo = true;
+            tarefaBanco.Nome = request.Nome;
+            tarefaBanco.AlteradoEm = DateTime.Now;
+            await _tarefaRepository.EditAsync(tarefaBanco);
+            return _mapper.Map<TarefaResponse>(tarefaBanco);
         }
 
 
-        public Task DeletarAsync(Guid id)
+        public async Task DeletarAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var tarefaBanco = await _tarefaRepository.FindAsync(id);
+            if (tarefaBanco == null)
+            {
+                throw new ArgumentException("Tarefa não encontrada");
+            }
+            if (tarefaBanco.Ativo == false)
+            {
+                throw new ArgumentException("Tarefa já foi deletada");
+            }
+            tarefaBanco.Ativo = true;
+            tarefaBanco.AlteradoEm = DateTime.Now;
+            await _tarefaRepository.EditAsync(tarefaBanco);
         }
 
-        public Task<TarefaResponse> ObterPorIdAsync(Guid id)
+        public async Task<TarefaResponse> ObterPorIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var tarefaBanco = await _tarefaRepository.FindAsync(x => x.Ativo && x.Id == id);
+            if (tarefaBanco == null)
+            {
+                throw new ArgumentException("Tarefa não encontrada");
+            }
+            return _mapper.Map<TarefaResponse>(tarefaBanco);
         }
 
-        public Task<IEnumerable<TarefaResponse>> ObterTodosAsync()
+        public async Task<IEnumerable<TarefaResponse>> ObterTodosAsync()
         {
-            throw new NotImplementedException();
+            var listaTarefas = await _tarefaRepository.ListAsync(x => x.Ativo);
+            return _mapper.Map<IEnumerable<TarefaResponse>>(listaTarefas);
         }
     }
 }
