@@ -12,7 +12,7 @@ namespace Pomoday.Domain.Entities
         public string Nome { get; set; }
         public EnumStatus Status { get; set; }
         public DateTime? Prazo{ get; set; }
-        public float Progresso{ get; set; }
+        public float? Progresso{ get; set; }
         public virtual Usuario Usuario { get; set; }
         public ICollection<Tarefa> Tarefas { get; set; }
 
