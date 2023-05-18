@@ -10,7 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 #region Configuração de conexão com o banco
-var connectionString = Environment.GetEnvironmentVariable("pomoday_connString");
+var connectionString = Environment.GetEnvironmentVariable("POMODAY_CONNSTRING");
 NativeInjectorBootStrapper.RegisterAppDependenciesContext(builder.Services, connectionString);
 #endregion
 
