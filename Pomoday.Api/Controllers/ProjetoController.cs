@@ -2,31 +2,32 @@
 using Pomoday.Domain.Contracts.Requests;
 using Pomoday.Domain.Contracts.Responses;
 using Pomoday.Domain.Interfaces.Service;
+using Pomoday.Service.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pomoday.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TarefaController : ControllerBase
+    public class ProjetoController :ControllerBase
     {
-        private readonly ITarefaService _tarefaService;
+        private readonly IProjetoService _projetoService;
 
-        public TarefaController(ITarefaService tarefaService)
+        public ProjetoController(IProjetoService projetoService)
         {
-            _tarefaService = tarefaService;
+            _projetoService = projetoService;
         }
 
         [HttpPost]
-        [SwaggerOperation(Summary = "Cadastra uma nova tarefa no banco.", Description = "Retorna dados da tarefa.")]
+        [SwaggerOperation(Summary = "Cadastra um novo projeto no banco.", Description = "Retorna dados do projeto.")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<TarefaResponse>> Post([FromBody] TarefaRequest tarefa)
+        public async Task<ActionResult<ProjetoResponse>> Post([FromBody] ProjetoRequest projeto)
         {
             try
             {
-                var result = await _tarefaService.CriarAsync(tarefa);
+                var result = await _projetoService.CriarAsync(projeto);
                 return Created(nameof(Post), result);
             }
             catch (ArgumentException exception)
@@ -37,15 +38,15 @@ namespace Pomoday.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        [SwaggerOperation(Summary = "Busca uma tarefa por Id", Description = "Retorna uma tarefa se ela for encontrada. Caso contrário, retorna exception.")]
+        [SwaggerOperation(Summary = "Busca um projeto por Id", Description = "Retorna um projeto se ele for encontrado. Caso contrário, retorna exception.")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<TarefaResponse>> GetById(Guid id)
+        public async Task<ActionResult<ProjetoResponse>> GetById(Guid id)
         {
             try
             {
-                var result = await _tarefaService.ObterPorIdAsync(id);
+                var result = await _projetoService.ObterPorIdAsync(id);
                 return Ok(result);
             }
             catch (ArgumentException exception)
@@ -59,15 +60,15 @@ namespace Pomoday.Api.Controllers
         }
 
         [HttpGet]
-        [SwaggerOperation(Summary = "Busca todas as tarefas ativas.", Description = "Retorna todas as tarefas ativas.")]
+        [SwaggerOperation(Summary = "Busca todos os projetos ativos.", Description = "Retorna todos os projetos ativos.")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<TarefaResponse>>> Get()
+        public async Task<ActionResult<IEnumerable<ProjetoResponse>>> Get()
         {
             try
             {
-                var result = await _tarefaService.ObterTodosAsync();
+                var result = await _projetoService.ObterTodosAsync();
                 return Ok(result);
             }
             catch (ArgumentException exception)
@@ -81,15 +82,15 @@ namespace Pomoday.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        [SwaggerOperation(Summary = "Busca tarefa para mudança de dados.", Description = "Retorna a tarefa modificada.")]
+        [SwaggerOperation(Summary = "Busca projeto para mudança de dados.", Description = "Retorna o projeto modificado.")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<TarefaResponse>> Put([FromBody] TarefaRequest request, [FromRoute] Guid id)
+        public async Task<ActionResult<TarefaResponse>> Put([FromBody] ProjetoRequest request, [FromRoute] Guid id)
         {
             try
             {
-                var result = await _tarefaService.AtualizarAsync(id, request);
+                var result = await _projetoService.AtualizarAsync(id, request);
                 return Ok(result);
             }
             catch (ArgumentException exception)
@@ -110,7 +111,7 @@ namespace Pomoday.Api.Controllers
         {
             try
             {
-                await _tarefaService.DeletarAsync(id);
+                await _projetoService.DeletarAsync(id);
                 return NoContent();
             }
             catch (ArgumentException exception)
