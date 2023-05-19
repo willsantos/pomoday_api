@@ -16,16 +16,12 @@ namespace Pomoday.Api.Controllers
         {
             _usuarioService = usuarioService;
         }
-
-        /// <summary>
-        /// Realiza cadastro de novo usuário.
-        /// </summary>
-        /// <returns>Usuário cadastrado</returns>
-        /// <response code="201">Retorna usuário cadastrado</response>
-        /// <response code="400">Se o item não for criado</response> 
+ 
         [HttpPost]
-        [SwaggerOperation(Summary = "Cadastra um novo usuario no banco.", Description = "Retorna dados do usuario.")]
-        [ProducesResponseType(201)]
+        [SwaggerOperation(Summary = "Cadastra um novo usuário no banco.", Description = "Retorna dados do usuario.")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<UsuarioResponse>> Post([FromBody] UsuarioRequest usuario)
         {
             try
@@ -39,15 +35,12 @@ namespace Pomoday.Api.Controllers
             }
             catch (Exception ex) { return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); }
         }
-        /// <summary>
-        /// Realiza uma busca de usuário por Id.
-        /// </summary>
-        /// <returns>Usuário</returns>
-        /// <response code="200">Retorna usuário</response>
-        /// <response code="404">Se o usuário não foi encontrado</response>
+
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Busca um usuário por Id", Description = "Retorna o usuário se ele for encontrado. Caso contrário, retorna exception.")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<UsuarioResponse>> GetById(Guid id)
         {
             try
@@ -64,15 +57,12 @@ namespace Pomoday.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); 
             }
         }
-        /// <summary>
-        /// Realiza busca de todos os usuários.
-        /// </summary>
-        /// <returns>Usuário</returns>
-        /// <response code="200">Retorna usuários</response>
-        /// <response code="404">Se os usuários não foram encontrados</response>
+
         [HttpGet]
         [SwaggerOperation(Summary = "Busca todos os usuários ativos.", Description = "Retorna todos os usuários ativos.")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<UsuarioResponse>>> Get()
         {
             try
@@ -90,15 +80,11 @@ namespace Pomoday.Api.Controllers
             }
         }
 
-        /// <summary>
-        /// Busca um usuário e realiza mudança de dados.
-        /// </summary>   
-        ///<returns>Usuário modificado</returns>
-        /// <response code="200">Se o usuário existe e foi alterado</response>
-        /// <response code="404">Se o usuário não foi encontrado</response>
         [HttpPut("{id}")]
-        [ProducesResponseType(200)]
         [SwaggerOperation(Summary = "Busca usuário para mudança de dados.", Description = "Retorna o usuário modificado.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<UsuarioResponse>> Put([FromBody] UsuarioAlteracaoRequest request, [FromRoute] Guid id)
         {
             try
@@ -116,13 +102,10 @@ namespace Pomoday.Api.Controllers
             }
         }
 
-        /// <summary>
-        /// Deleta usuário.
-        /// </summary>            
-        /// <response code="200">Se o usuário existe</response>
-        /// <response code="404">Se o usuário não existe</response>
         [HttpDelete("{id}")]
-        [ProducesResponseType(204)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> Delete([FromRoute] Guid id)
         {
             try
