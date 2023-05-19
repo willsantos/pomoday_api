@@ -2,31 +2,32 @@
 using Pomoday.Domain.Contracts.Requests;
 using Pomoday.Domain.Contracts.Responses;
 using Pomoday.Domain.Interfaces.Service;
+using Pomoday.Service.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pomoday.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UsuarioController : ControllerBase
+    public class ProjetoController :ControllerBase
     {
-        private readonly IUsuarioService _usuarioService;
+        private readonly IProjetoService _projetoService;
 
-        public UsuarioController(IUsuarioService usuarioService)
+        public ProjetoController(IProjetoService projetoService)
         {
-            _usuarioService = usuarioService;
+            _projetoService = projetoService;
         }
- 
+
         [HttpPost]
-        [SwaggerOperation(Summary = "Cadastra um novo usuário no banco.", Description = "Retorna dados do usuario.")]
+        [SwaggerOperation(Summary = "Cadastra um novo projeto no banco.", Description = "Retorna dados do projeto.")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<UsuarioResponse>> Post([FromBody] UsuarioRequest usuario)
+        public async Task<ActionResult<ProjetoResponse>> Post([FromBody] ProjetoRequest projeto)
         {
             try
             {
-                var result = await _usuarioService.CriarAsync(usuario);
+                var result = await _projetoService.CriarAsync(projeto);
                 return Created(nameof(Post), result);
             }
             catch (ArgumentException exception)
@@ -37,62 +38,62 @@ namespace Pomoday.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        [SwaggerOperation(Summary = "Busca um usuário por Id", Description = "Retorna o usuário se ele for encontrado. Caso contrário, retorna exception.")]
+        [SwaggerOperation(Summary = "Busca um projeto por Id", Description = "Retorna um projeto se ele for encontrado. Caso contrário, retorna exception.")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<UsuarioResponse>> GetById(Guid id)
+        public async Task<ActionResult<ProjetoResponse>> GetById(Guid id)
         {
             try
             {
-                var result = await _usuarioService.ObterPorIdAsync(id);
+                var result = await _projetoService.ObterPorIdAsync(id);
                 return Ok(result);
             }
-            catch(ArgumentException exception)
+            catch (ArgumentException exception)
             {
                 return NotFound(exception.Message);
             }
-            catch (Exception ex) 
-            { 
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); 
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
         [HttpGet]
-        [SwaggerOperation(Summary = "Busca todos os usuários ativos.", Description = "Retorna todos os usuários ativos.")]
+        [SwaggerOperation(Summary = "Busca todos os projetos ativos.", Description = "Retorna todos os projetos ativos.")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<UsuarioResponse>>> Get()
+        public async Task<ActionResult<IEnumerable<ProjetoResponse>>> Get()
         {
             try
             {
-                var result = await _usuarioService.ObterTodosAsync();
+                var result = await _projetoService.ObterTodosAsync();
                 return Ok(result);
             }
-            catch(ArgumentException exception)
+            catch (ArgumentException exception)
             {
                 return NotFound(exception.Message);
             }
-            catch (Exception ex) 
-            { 
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); 
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
         [HttpPut("{id}")]
-        [SwaggerOperation(Summary = "Busca usuário para mudança de dados.", Description = "Retorna o usuário modificado.")]
+        [SwaggerOperation(Summary = "Busca projeto para mudança de dados.", Description = "Retorna o projeto modificado.")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<UsuarioResponse>> Put([FromBody] UsuarioAlteracaoRequest request, [FromRoute] Guid id)
+        public async Task<ActionResult<TarefaResponse>> Put([FromBody] ProjetoRequest request, [FromRoute] Guid id)
         {
             try
             {
-                var result = await _usuarioService.PutUsuario(request, id);
+                var result = await _projetoService.AtualizarAsync(id, request);
                 return Ok(result);
             }
-            catch(ArgumentException exception)
+            catch (ArgumentException exception)
             {
                 return NotFound(exception.Message);
             }
@@ -110,10 +111,10 @@ namespace Pomoday.Api.Controllers
         {
             try
             {
-                await _usuarioService.DeletarAsync(id);
+                await _projetoService.DeletarAsync(id);
                 return NoContent();
             }
-            catch(ArgumentException exception)
+            catch (ArgumentException exception)
             {
                 return NotFound(exception.Message);
             }

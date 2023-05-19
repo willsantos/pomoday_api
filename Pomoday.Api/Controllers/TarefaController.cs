@@ -8,25 +8,25 @@ namespace Pomoday.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UsuarioController : ControllerBase
+    public class TarefaController : ControllerBase
     {
-        private readonly IUsuarioService _usuarioService;
+        private readonly ITarefaService _tarefaService;
 
-        public UsuarioController(IUsuarioService usuarioService)
+        public TarefaController(ITarefaService tarefaService)
         {
-            _usuarioService = usuarioService;
+            _tarefaService = tarefaService;
         }
- 
+
         [HttpPost]
-        [SwaggerOperation(Summary = "Cadastra um novo usuário no banco.", Description = "Retorna dados do usuario.")]
+        [SwaggerOperation(Summary = "Cadastra uma nova tarefa no banco.", Description = "Retorna dados da tarefa.")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<UsuarioResponse>> Post([FromBody] UsuarioRequest usuario)
+        public async Task<ActionResult<TarefaResponse>> Post([FromBody] TarefaRequest tarefa)
         {
             try
             {
-                var result = await _usuarioService.CriarAsync(usuario);
+                var result = await _tarefaService.CriarAsync(tarefa);
                 return Created(nameof(Post), result);
             }
             catch (ArgumentException exception)
@@ -37,62 +37,62 @@ namespace Pomoday.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        [SwaggerOperation(Summary = "Busca um usuário por Id", Description = "Retorna o usuário se ele for encontrado. Caso contrário, retorna exception.")]
+        [SwaggerOperation(Summary = "Busca uma tarefa por Id", Description = "Retorna uma tarefa se ela for encontrada. Caso contrário, retorna exception.")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<UsuarioResponse>> GetById(Guid id)
+        public async Task<ActionResult<TarefaResponse>> GetById(Guid id)
         {
             try
             {
-                var result = await _usuarioService.ObterPorIdAsync(id);
+                var result = await _tarefaService.ObterPorIdAsync(id);
                 return Ok(result);
             }
-            catch(ArgumentException exception)
+            catch (ArgumentException exception)
             {
                 return NotFound(exception.Message);
             }
-            catch (Exception ex) 
-            { 
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); 
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
         [HttpGet]
-        [SwaggerOperation(Summary = "Busca todos os usuários ativos.", Description = "Retorna todos os usuários ativos.")]
+        [SwaggerOperation(Summary = "Busca todas as tarefas ativas.", Description = "Retorna todas as tarefas ativas.")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<UsuarioResponse>>> Get()
+        public async Task<ActionResult<IEnumerable<TarefaResponse>>> Get()
         {
             try
             {
-                var result = await _usuarioService.ObterTodosAsync();
+                var result = await _tarefaService.ObterTodosAsync();
                 return Ok(result);
             }
-            catch(ArgumentException exception)
+            catch (ArgumentException exception)
             {
                 return NotFound(exception.Message);
             }
-            catch (Exception ex) 
-            { 
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); 
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
         [HttpPut("{id}")]
-        [SwaggerOperation(Summary = "Busca usuário para mudança de dados.", Description = "Retorna o usuário modificado.")]
+        [SwaggerOperation(Summary = "Busca tarefa para mudança de dados.", Description = "Retorna a tarefa modificada.")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<UsuarioResponse>> Put([FromBody] UsuarioAlteracaoRequest request, [FromRoute] Guid id)
+        public async Task<ActionResult<TarefaResponse>> Put([FromBody] TarefaRequest request, [FromRoute] Guid id)
         {
             try
             {
-                var result = await _usuarioService.PutUsuario(request, id);
+                var result = await _tarefaService.AtualizarAsync(id, request);
                 return Ok(result);
             }
-            catch(ArgumentException exception)
+            catch (ArgumentException exception)
             {
                 return NotFound(exception.Message);
             }
@@ -110,10 +110,10 @@ namespace Pomoday.Api.Controllers
         {
             try
             {
-                await _usuarioService.DeletarAsync(id);
+                await _tarefaService.DeletarAsync(id);
                 return NoContent();
             }
-            catch(ArgumentException exception)
+            catch (ArgumentException exception)
             {
                 return NotFound(exception.Message);
             }
