@@ -14,6 +14,9 @@ var connectionString = Environment.GetEnvironmentVariable("POMODAY_CONNSTRING");
 NativeInjectorBootStrapper.RegisterAppDependenciesContext(builder.Services, connectionString);
 #endregion
 
+#region Configuração services e mappers
+NativeInjectorBootStrapper.RegisterAppDependencies(builder.Services);
+#endregion
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

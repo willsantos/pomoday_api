@@ -12,7 +12,8 @@ namespace Pomoday.IoC
     {
         public static void RegisterAppDependencies(this IServiceCollection services)
         {
-            
+            ConfigureService.ConfigureDependenciesService(services);
+            ConfigureMappers.ConfigureDependenciesMapper(services);
         }
 
         public static void RegisterAppDependenciesContext(this IServiceCollection services, string connectionString)
